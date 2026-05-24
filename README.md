@@ -1,4 +1,4 @@
-# 🏏 IPL Crunch '26 — Analytics Submission
+# IPL Crunch '26 — Analytics Submission
 
 [![Python](https://img.shields.io/badge/Python-3.9+-blue?logo=python)](https://python.org)
 [![Pandas](https://img.shields.io/badge/Pandas-2.0-green?logo=pandas)](https://pandas.pydata.org)
@@ -11,7 +11,7 @@
 
 ---
 
-## 📖 Overview
+## Overview
 
 **IPL Crunch '26** is a competitive data analytics challenge by [Wooble](https://wooble.org) focused on real-world cricket analytics.
 
@@ -19,7 +19,7 @@ This repository contains a **professional, end-to-end IPL analytics pipeline** b
 
 ---
 
-## 🎯 Key Questions Answered
+## Key Questions Answered
 
 | Question | Finding |
 |----------|---------|
@@ -31,7 +31,7 @@ This repository contains a **professional, end-to-end IPL analytics pipeline** b
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 IPL-Crunch-26/
@@ -46,12 +46,12 @@ IPL-Crunch-26/
 │   └── toss_by_season.csv         ← Toss win rates per season
 │
 ├── notebooks/
-│   ├── ipl_analysis.ipynb         ← 📓 Main analysis notebook (42 cells)
+│   ├── ipl_analysis.ipynb         ← Main analysis notebook (42 cells)
 │   ├── ipl_analysis.py            ← Python script version of pipeline
 │   ├── build_notebook.py          ← Notebook builder utility
 │   └── generate_report.py         ← Report generator utility
 │
-├── visuals/                       ← 📊 All exported charts (14 PNGs)
+├── visuals/                       ← All exported charts (14 PNGs)
 │   ├── 01_toss_winrate_seasons.png
 │   ├── 02_toss_decision_winrate.png
 │   ├── 03_phase_wise_bar.png
@@ -68,19 +68,19 @@ IPL-Crunch-26/
 │   └── 14_dot_ball_pressure.png
 │
 ├── dashboard/
-│   └── app.py                     ← 🖥 Interactive Streamlit dashboard
+│   └── app.py                     ← Interactive Streamlit dashboard
 │
 ├── report/
-│   └── ipl_analytics_report.md    ← 📋 Full analytics report
+│   └── ipl_analytics_report.md    ← Full analytics report
 │
-├── presentation/                  ← 🎤 Slide assets (place PPT here)
+├── presentation/                  ← Slide assets (place PPT here)
 │
 └── README.md
 ```
 
 ---
 
-## 📊 Key Visualisations
+## Key Visualisations
 
 ### 1. Toss Analysis
 ![Toss Win Rate](visuals/01_toss_winrate_seasons.png)
@@ -102,7 +102,7 @@ IPL-Crunch-26/
 
 ---
 
-## 🧠 Methodology
+## Methodology
 
 | Step | Detail |
 |------|--------|
@@ -115,7 +115,7 @@ IPL-Crunch-26/
 
 ---
 
-## 🔥 The ONE Genuinely Surprising Insight
+## The ONE Genuinely Surprising Insight
 
 > **"Restrict to 160, not 200."**
 
@@ -131,7 +131,7 @@ This fundamentally challenges the prevailing T20 wisdom.
 
 ---
 
-## 🚀 How to Run
+## How to Run
 
 ### Prerequisites
 ```bash
@@ -168,7 +168,7 @@ The dashboard includes:
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 | Tool | Purpose |
 |------|---------|
@@ -181,7 +181,7 @@ The dashboard includes:
 
 ---
 
-## 📋 Submission Components
+## Submission Components
 
 - ✅ **Source Code / Notebook** — `notebooks/ipl_analysis.ipynb` (42 cells)
 - ✅ **Analysis Report** — `report/ipl_analytics_report.md`
@@ -191,7 +191,7 @@ The dashboard includes:
 
 ---
 
-## 💡 Key Conclusions
+## Key Conclusions
 
 1. **Toss impact is statistically marginal** — focus on execution, not the coin-flip
 2. **Death overs are the decisive battleground** — invest in overs 16–20
@@ -203,4 +203,4 @@ The dashboard includes:
 
 ---
 
-*IPL Crunch '26 · Submission by Individual Participant · Built with ❤️ and data*
+*IPL Crunch '26 · Submission by Harini Nagarajan*
