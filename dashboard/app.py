@@ -32,7 +32,7 @@ st.set_page_config(
     page_title="IPL SixSense Analytics",
     page_icon=favicon,
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="collapsed",
 )
 
 # ─── MAXIMUM GLASSMORPHISM CSS ────────────────────────────────────────────────
@@ -1255,64 +1255,47 @@ def reset_filters():
     st.session_state.filter_phase = "All Phases"
     st.session_state.filter_win = "All"
 
-with st.sidebar:
-    st.markdown("""
-    <div style="text-align:center;padding:22px 0 16px;">
-        <div style="font-size:3rem;filter:drop-shadow(0 0 18px rgba(253,224,71,0.55));">
-            <i class="fa-solid fa-baseball-bat-ball" style="color:#FDE047;"></i>
+with st.expander("🔍 Analytics Filters & Controls", expanded=True):
+    st.markdown('<div style="height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.08),transparent);margin:0 0 20px;"></div>', unsafe_allow_html=True)
+    f_col1, f_col2, f_col3, f_col4 = st.columns(4)
+    
+    with f_col1:
+        st.markdown('<p style="font-size:0.68rem;color:#94a3b8;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;"><i class="fa-solid fa-calendar-days" style="margin-right:6px;color:#FDE047;"></i> SEASON RANGE</p>', unsafe_allow_html=True)
+        s_range = st.slider("Season", int(min(SEASONS)), int(max(SEASONS)), key="filter_season", label_visibility="collapsed")
+        
+        st.markdown('<p style="font-size:0.68rem;color:#94a3b8;letter-spacing:0.1em;text-transform:uppercase;margin:14px 0 6px;"><i class="fa-solid fa-clock" style="margin-right:6px;color:#2DD4BF;"></i> INNINGS</p>', unsafe_allow_html=True)
+        inn_filter = st.radio("Innings", ["Both","1st Only","2nd Only"], key="filter_innings", label_visibility="collapsed")
+
+    with f_col2:
+        st.markdown('<p style="font-size:0.68rem;color:#94a3b8;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;"><i class="fa-solid fa-people-group" style="margin-right:6px;color:#60A5FA;"></i> TEAMS</p>', unsafe_allow_html=True)
+        sel_teams = st.multiselect("Teams", ["All Teams"]+sorted(TEAMS_LONG), key="filter_teams", label_visibility="collapsed")
+        
+        st.markdown('<p style="font-size:0.68rem;color:#94a3b8;letter-spacing:0.1em;text-transform:uppercase;margin:14px 0 6px;"><i class="fa-solid fa-gavel" style="margin-right:6px;color:#FDA4AF;"></i> TOSS DECISION</p>', unsafe_allow_html=True)
+        toss_filter = st.radio("Toss Decision", ["All", "Batting first", "Fielding first"], key="filter_toss", label_visibility="collapsed")
+
+    with f_col3:
+        st.markdown('<p style="font-size:0.68rem;color:#94a3b8;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;"><i class="fa-solid fa-stadium" style="margin-right:6px;color:#C084FC;"></i> VENUES</p>', unsafe_allow_html=True)
+        sel_venues = st.multiselect("Venues", ["All Venues"]+sorted(df["venue"].dropna().unique()), key="filter_venues", label_visibility="collapsed")
+        
+        st.markdown('<p style="font-size:0.68rem;color:#94a3b8;letter-spacing:0.1em;text-transform:uppercase;margin:14px 0 6px;"><i class="fa-solid fa-chart-line" style="margin-right:6px;color:#86EFAC;"></i> MATCH PHASE</p>', unsafe_allow_html=True)
+        phase_filter = st.radio("Match Phase", ["All Phases", "Powerplay (Overs 0-5)", "Middle (Overs 6-14)", "Death (Overs 15-20)"], key="filter_phase", label_visibility="collapsed")
+
+    with f_col4:
+        st.markdown('<p style="font-size:0.68rem;color:#94a3b8;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;"><i class="fa-solid fa-trophy" style="margin-right:6px;color:#FDE047;"></i> WIN TYPE</p>', unsafe_allow_html=True)
+        win_filter = st.radio("Win Type", ["All", "Defending (Won by Runs)", "Chasing (Won by Wickets)"], key="filter_win", label_visibility="collapsed")
+        
+        st.markdown("<div style='margin-top:20px;'></div>", unsafe_allow_html=True)
+        st.button("Reset All Filters", on_click=reset_filters, use_container_width=True)
+        
+        st.markdown(f"""
+        <div style="font-size:0.66rem;color:#94a3b8;text-align:center;line-height:2.1;margin-top:10px;">
+            <div style="color:#86efac;font-size:0.78rem;font-weight:700;margin-bottom:4px;">
+                <i class="fa-solid fa-circle-play" style="color:#86efac;margin-right:4px;"></i> LIVE ENGINE
+            </div>
+            {len(df):,} deliveries<br>{len(matches):,} matches · {len(SEASONS)} seasons
         </div>
-        <div style="font-size:1.1rem;font-weight:900;letter-spacing:-0.02em;margin-top:8px;
-                    background:linear-gradient(90deg,#FDE047,#FDA4AF,#C084FC);
-                    -webkit-background-clip:text;-webkit-text-fill-color:transparent;">
-            IPL SixSense Analytics
-        </div>
-        <div style="font-size:0.62rem;color:#94a3b8;letter-spacing:0.16em;margin-top:2px;">
-            CRUNCH '26 · ANALYTICS HUB
-        </div>
-    </div>
-    <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.08),transparent);margin:0 0 20px;"></div>
-    """, unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
 
-    st.markdown('<p style="font-size:0.68rem;color:#94a3b8;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;"><i class="fa-solid fa-calendar-days" style="margin-right:6px;color:#FDE047;"></i> SEASON RANGE</p>', unsafe_allow_html=True)
-    s_range = st.slider("Season", int(min(SEASONS)), int(max(SEASONS)),
-                        key="filter_season", label_visibility="collapsed")
-
-    st.markdown('<p style="font-size:0.68rem;color:#94a3b8;letter-spacing:0.1em;text-transform:uppercase;margin:14px 0 6px;"><i class="fa-solid fa-people-group" style="margin-right:6px;color:#60A5FA;"></i> TEAMS</p>', unsafe_allow_html=True)
-    sel_teams = st.multiselect("Teams", ["All Teams"]+sorted(TEAMS_LONG),
-                               key="filter_teams", label_visibility="collapsed")
-
-    st.markdown('<p style="font-size:0.68rem;color:#94a3b8;letter-spacing:0.1em;text-transform:uppercase;margin:14px 0 6px;"><i class="fa-solid fa-stadium" style="margin-right:6px;color:#C084FC;"></i> VENUES</p>', unsafe_allow_html=True)
-    sel_venues = st.multiselect("Venues", ["All Venues"]+sorted(df["venue"].dropna().unique()),
-                                key="filter_venues", label_visibility="collapsed")
-
-    st.markdown('<p style="font-size:0.68rem;color:#94a3b8;letter-spacing:0.1em;text-transform:uppercase;margin:14px 0 6px;"><i class="fa-solid fa-clock" style="margin-right:6px;color:#2DD4BF;"></i> INNINGS</p>', unsafe_allow_html=True)
-    inn_filter = st.radio("Innings", ["Both","1st Only","2nd Only"],
-                          key="filter_innings", label_visibility="collapsed")
-
-    st.markdown('<p style="font-size:0.68rem;color:#94a3b8;letter-spacing:0.1em;text-transform:uppercase;margin:14px 0 6px;"><i class="fa-solid fa-gavel" style="margin-right:6px;color:#FDA4AF;"></i> TOSS DECISION</p>', unsafe_allow_html=True)
-    toss_filter = st.radio("Toss Decision", ["All", "Batting first", "Fielding first"],
-                           key="filter_toss", label_visibility="collapsed")
-
-    st.markdown('<p style="font-size:0.68rem;color:#94a3b8;letter-spacing:0.1em;text-transform:uppercase;margin:14px 0 6px;"><i class="fa-solid fa-chart-line" style="margin-right:6px;color:#86EFAC;"></i> MATCH PHASE</p>', unsafe_allow_html=True)
-    phase_filter = st.radio("Match Phase", ["All Phases", "Powerplay (Overs 0-5)", "Middle (Overs 6-14)", "Death (Overs 15-20)"],
-                            key="filter_phase", label_visibility="collapsed")
-
-    st.markdown('<p style="font-size:0.68rem;color:#94a3b8;letter-spacing:0.1em;text-transform:uppercase;margin:14px 0 6px;"><i class="fa-solid fa-trophy" style="margin-right:6px;color:#FDE047;"></i> WIN TYPE</p>', unsafe_allow_html=True)
-    win_filter = st.radio("Win Type", ["All", "Defending (Won by Runs)", "Chasing (Won by Wickets)"],
-                          key="filter_win", label_visibility="collapsed")
-
-    st.markdown("<div style='margin-top:20px;'></div>", unsafe_allow_html=True)
-    st.button("Reset All Filters", on_click=reset_filters, use_container_width=True)
-
-    st.markdown(f"""
-    <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.08),transparent);margin:20px 0 14px;"></div>
-    <div style="font-size:0.66rem;color:#94a3b8;text-align:center;line-height:2.1;">
-        <div style="color:#86efac;font-size:0.78rem;font-weight:700;margin-bottom:4px;">
-            <i class="fa-solid fa-circle-play" style="color:#86efac;margin-right:4px;"></i> LIVE ENGINE
-        </div>
-        {len(df):,} deliveries<br>{len(matches):,} matches · {len(SEASONS)} seasons
-    </div>
-    """, unsafe_allow_html=True)
 
 # ─── APPLY FILTERS ────────────────────────────────────────────────────────────
 dff = df[df["season"].between(s_range[0], s_range[1])].copy()
